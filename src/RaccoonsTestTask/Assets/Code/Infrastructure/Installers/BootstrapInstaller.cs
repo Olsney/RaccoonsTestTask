@@ -1,7 +1,10 @@
+using Code.Gameplay.Cube.Spawner;
 using Code.Infrastructure.AssetManagement;
 using Code.Infrastructure.Factory.Game;
 using Code.Infrastructure.Factory.State;
 using Code.Infrastructure.States;
+using Code.Services.InputHandlerProvider;
+using Code.Services.InputHandlerProviders;
 using Code.Services.Inputs;
 using Code.Services.StaticData;
 using UnityEngine;
@@ -43,6 +46,8 @@ namespace Code.Infrastructure.Installers
             BindInputService();
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
             Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
+            Container.Bind<IPlayerInputHandlerProvider>().To<PlayerInputHandlerProvider>().AsSingle();
+            Container.Bind<ICubeSpawner>().To<CubeSpawner>().AsSingle();
         }
         
         private void BindInputService()
