@@ -9,6 +9,7 @@ namespace Code.Gameplay.Input
     {
         public event Action<Vector2> TapStarted;
         public event Action<Vector2> TapEnded;
+
         private IInputService _inputService;
         private bool _isDragging;
 
@@ -20,11 +21,28 @@ namespace Code.Gameplay.Input
 
         private void Update()
         {
-            if (_inputService.IsPointerDown()) 
-                TapStarted?.Invoke(_inputService.GetPointerPosition());
+            if (_inputService.IsPointerDown())
+            {
+                if (!_isDragging)
+                {
+                    _isDragging = true;
 
-            if (_inputService.IsPointerUp() && _isDragging) 
-                TapEnded?.Invoke(_inputService.GetPointerPosition());
+                    Debug.Log("TapStarted");
+
+                    TapStarted?.Invoke(_inputService.GetPointerPosition());
+                }
+            }
+            else
+            {
+                if (_isDragging && _inputService.IsPointerUp())
+                {
+                    Debug.Log("TapEnded");
+
+                    TapEnded?.Invoke(_inputService.GetPointerPosition());
+
+                    _isDragging = false;
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using Code.Infrastructure.States;
 using Code.Services.InputHandlerProvider;
 using Code.Services.InputHandlerProviders;
 using Code.Services.Inputs;
+using Code.Services.SpawnPointProviders;
 using Code.Services.StaticData;
 using UnityEngine;
 using Zenject;
@@ -47,7 +48,8 @@ namespace Code.Infrastructure.Installers
             Container.Bind<IStaticDataService>().To<StaticDataService>().AsSingle();
             Container.Bind<IAssetProvider>().To<AssetProvider>().AsSingle();
             Container.Bind<IPlayerInputHandlerProvider>().To<PlayerInputHandlerProvider>().AsSingle();
-            Container.Bind<ICubeSpawner>().To<CubeSpawner>().AsSingle();
+            // Container.Bind<ICubeSpawner>().To<CubeSpawner>().AsSingle();
+            Container.Bind<ICubeSpawnPointProvider>().To<CubeSpawnPointProvider>().AsSingle();
         }
         
         private void BindInputService()

@@ -1,12 +1,9 @@
-using Code.Infrastructure.Factory;
 using Code.Infrastructure.Factory.Game;
-using UnityEngine;
 
 namespace Code.Infrastructure.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
-        private const string InitialPointTag = "InitialBallPoint";
         private const string EmptySceneName = "Empty";
 
         private readonly GameStateMachine _stateMachine;
@@ -48,6 +45,7 @@ namespace Code.Infrastructure.States
         private void InitGameWorld()
         {
             _gameFactory.CreatePlayerInputHandler();
+            _gameFactory.CreateCubeSpawner();
         }
     }
 }

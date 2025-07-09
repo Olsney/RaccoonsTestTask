@@ -6,5 +6,6 @@ namespace Code.Infrastructure.Factory.Game
     {
         GameObject CreatePlayerInputHandler();
         GameObject CreateCube();
+        GameObject CreateCubeSpawner();
     }
 }
