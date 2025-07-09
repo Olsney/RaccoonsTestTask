@@ -136,9 +136,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &4813371508226075483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f56a9e8097a4cf9a5bd3a3d406f2892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveLimitX: 3
+  _distanceFromCamera: 10
 --- !u!114 &5564934123839040981
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ namespace Code.Gameplay.Input
 
         private IInputService _inputService;
         private bool _isDragging;
+        
+        public Vector2 PointerPosition() => _inputService.GetPointerPosition();
 
         [Inject]
         public void Construct(IInputService inputService)
