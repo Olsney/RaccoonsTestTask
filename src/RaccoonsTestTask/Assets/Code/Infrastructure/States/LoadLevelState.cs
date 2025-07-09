@@ -47,6 +47,7 @@ namespace Code.Infrastructure.States
 
         private void InitGameWorld()
         {
+            _gameFactory.CreatePlayerInputHandler();
         }
     }
 }
