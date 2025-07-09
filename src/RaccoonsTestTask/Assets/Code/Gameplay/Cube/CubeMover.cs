@@ -7,71 +7,68 @@ namespace Code.Gameplay.Cube
 {
     public class CubeMover : MonoBehaviour
     {
-        [SerializeField] private float _moveLimitX = 3f;
-        [SerializeField] private float _distanceFromCamera = 10f; 
-        
-        private IPlayerInputHandlerProvider _playerInputHandlerProvider;
-        private PlayerInputHandler _playerInputHandler;
-        private Camera _mainCamera;
-        private Rigidbody _rigidbody;
-        private bool _isDragging;
+        [SerializeField] private float _moveLimitZ = 3f;
+        [SerializeField] private float _distanceFromCamera = 10f;
+        [SerializeField] private float _launchForce = 500f;
 
+        private Rigidbody _rigidbody;
+        private Camera _mainCamera;
+        private bool _isDragging;
+        private bool _isLaunched;
+
+        private PlayerInputHandler _input;
 
         [Inject]
-        public void Construct(IPlayerInputHandlerProvider playerInputHandlerProvider)
+        public void Construct(IPlayerInputHandlerProvider inputProvider)
         {
-            _playerInputHandlerProvider = playerInputHandlerProvider;
-            _rigidbody = GetComponent<Rigidbody>();
-
-            _mainCamera = Camera.main;
+            _input = inputProvider.Get();
         }
 
         public void Initialize()
         {
-            _playerInputHandler = _playerInputHandlerProvider.Get();
-
             _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.isKinematic = true; // пока не бросили, отключаем физику
+            _rigidbody.isKinematic = true;
+
             _mainCamera = Camera.main;
-            
-            _playerInputHandler.TapStarted += OnTapStarted;
-            _playerInputHandler.TapEnded += OnTapEnded;
+
+            _input.TapStarted += OnTapStarted;
+            _input.TapEnded += OnTapEnded;
         }
-        
+
+        public void Dispose()
+        {
+            _input.TapStarted -= OnTapStarted;
+            _input.TapEnded -= OnTapEnded;
+        }
+
         private void Update()
         {
-            if (!_isDragging || _rigidbody == null || !_rigidbody.isKinematic)
-                return;
-
-            MoveWithPointer(_playerInputHandler.PointerPosition());
-        }
-        
-        private void OnDestroy()
-        {
-                _playerInputHandler.TapStarted -= OnTapStarted;
-                _playerInputHandler.TapEnded -= OnTapEnded;
+            if (_isDragging && !_isLaunched)
+                DragWithPointer(_input.PointerPosition());
         }
 
-        private void OnTapStarted(Vector2 obj)
+        private void OnTapStarted(Vector2 pos)
         {
+            if (_isLaunched) return;
             _isDragging = true;
         }
 
-        private void OnTapEnded(Vector2 obj)
+        private void OnTapEnded(Vector2 pos)
         {
-            _isDragging = false;
+            if (_isLaunched) return;
 
+            _isDragging = false;
+            _isLaunched = true;
             _rigidbody.isKinematic = false;
-            _rigidbody.AddForce(Vector3.right * -500f);
+            _rigidbody.AddForce(Vector3.left * _launchForce);
         }
-        
-        private void MoveWithPointer(Vector2 screenPosition)
+
+        private void DragWithPointer(Vector2 screenPos)
         {
-            Vector3 worldPointerPosition = _mainCamera.ScreenToWorldPoint(
-                new Vector3(screenPosition.x, screenPosition.y, _distanceFromCamera));
-            Vector3 positionToChange = transform.position;
-            positionToChange.z = Mathf.Clamp(worldPointerPosition.z, -_moveLimitX, _moveLimitX);
-            transform.position = positionToChange;
+            Vector3 world = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _distanceFromCamera));
+            var pos = transform.position;
+            pos.z = Mathf.Clamp(world.z, -_moveLimitZ, _moveLimitZ);
+            transform.position = pos;
         }
     }
 }
