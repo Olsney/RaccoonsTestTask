@@ -6,5 +6,7 @@ namespace Code.UI.Factory
     {
         GameObject CreateUIRoot();
         GameObject CreateHud();
+        GameObject CreateVictoryWindow();
+        GameObject CreateLoseWindow();
     }
 }

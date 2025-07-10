@@ -32,5 +32,21 @@ namespace Code.UI.Factory
             return _instantiator.InstantiatePrefab(prefab, Vector3.zero, 
                 Quaternion.identity, null);
         }
+
+        public GameObject CreateVictoryWindow()
+        {
+            GameObject prefab = _assets.Load(AssetPath.VictoryWindowPath);
+            
+            return _instantiator.InstantiatePrefab(prefab, Vector3.zero, 
+                Quaternion.identity, _uiRoot.transform);
+            
+        }
+
+        public GameObject CreateLoseWindow()
+        {
+            GameObject prefab = _assets.Load(AssetPath.LoseWindowPath);
+            
+            return _instantiator.InstantiatePrefab(prefab, Vector3.zero, 
+                Quaternion.identity, _uiRoot.transform);        }
     }
 }

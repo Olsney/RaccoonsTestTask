@@ -14,6 +14,7 @@ using Code.Services.Randoms;
 using Code.Services.SpawnPointProviders;
 using Code.Services.StaticData;
 using Code.UI.Factory;
+using Code.UI.Services.Windows;
 using UnityEngine;
 using Zenject;
 
@@ -61,6 +62,7 @@ namespace Code.Infrastructure.Installers
             Container.Bind<ICubeSpawnerProvider>().To<CubeSpawnerProvider>().AsSingle();
             Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
             Container.Bind<IWorldData>().To<WorldData>().AsSingle();
+            Container.Bind<IWindowService>().To<WindowService>().AsSingle();
         }
         
         private void BindInputService()
