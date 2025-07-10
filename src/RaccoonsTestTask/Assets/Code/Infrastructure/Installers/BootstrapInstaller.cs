@@ -6,6 +6,8 @@ using Code.Services.InputHandlerProvider;
 using Code.Services.InputHandlerProviders;
 using Code.Services.Inputs;
 using Code.Services.Merge;
+using Code.Services.Random;
+using Code.Services.Randoms;
 using Code.Services.SpawnPointProviders;
 using Code.Services.StaticData;
 using UnityEngine;
@@ -50,6 +52,7 @@ namespace Code.Infrastructure.Installers
             Container.Bind<IPlayerInputHandlerProvider>().To<PlayerInputHandlerProvider>().AsSingle();
             Container.Bind<ICubeSpawnPointProvider>().To<CubeSpawnPointProvider>().AsSingle();
             Container.Bind<IMergeService>().To<MergeService>().AsSingle();
+            Container.Bind<IRandomService>().To<RandomService>().AsSingle();
         }
         
         private void BindInputService()

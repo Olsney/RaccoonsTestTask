@@ -3,6 +3,7 @@ using Code.Gameplay.Cube.Spawner;
 using Code.Gameplay.Input;
 using Code.Infrastructure.AssetManagement;
 using Code.Services.InputHandlerProvider;
+using Code.Services.Random;
 using Code.Services.SpawnPointProviders;
 using UnityEngine;
 using Zenject;
@@ -15,16 +16,19 @@ namespace Code.Infrastructure.Factory.Game
         private readonly IAssetProvider _assets;
         private readonly IPlayerInputHandlerProvider _playerInputHandlerProvider;
         private readonly ICubeSpawnPointProvider _cubeSpawnPointProvider;
+        private readonly IRandomService _randomService;
 
         public GameFactory(IInstantiator instantiator, 
             IAssetProvider assets,
             IPlayerInputHandlerProvider playerInputHandlerProvider,
-            ICubeSpawnPointProvider cubeSpawnPointProvider)
+            ICubeSpawnPointProvider cubeSpawnPointProvider,
+            IRandomService randomService)
         {
             _instantiator = instantiator;
             _assets = assets;
             _playerInputHandlerProvider = playerInputHandlerProvider;
             _cubeSpawnPointProvider = cubeSpawnPointProvider;
+            _randomService = randomService;
         }
         
         public GameObject CreatePlayerInputHandler()
@@ -59,6 +63,9 @@ namespace Code.Infrastructure.Factory.Game
             
             CubeMover cubeMover = instance.GetComponent<CubeMover>();
             cubeMover.Initialize();
+
+            Cube cube = instance.GetComponent<Cube>();
+            cube.Initialize(_randomService.GetRandomPo2Value());
 
             return instance;
         }
