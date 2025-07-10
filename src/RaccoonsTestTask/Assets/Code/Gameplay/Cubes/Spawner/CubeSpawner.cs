@@ -5,7 +5,6 @@ using Code.Services.InputHandlerProvider;
 using Code.Services.Random;
 using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 
 namespace Code.Gameplay.Cubes.Spawner
 {
@@ -94,14 +93,18 @@ namespace Code.Gameplay.Cubes.Spawner
             }
         }
 
-        private static void AddRandomForceToNewCube(Rigidbody rb)
+        private void AddRandomForceToNewCube(Rigidbody rigidbody)
         {
+            float min = -0.5f;
+            float max = 0.5f;
+            
             Vector3 randomDirection = Vector3.up + new Vector3(
-                Random.Range(-0.5f, 0.5f),
+                _randomService.Next(min, max),
                 0f,
-                Random.Range(-0.5f, 0.5f)
+                _randomService.Next(min, max)
             ).normalized;
-            rb.AddForce(randomDirection * 0.5f, ForceMode.Impulse);
+            
+            rigidbody.AddForce(randomDirection * 0.5f, ForceMode.Impulse);
         }
     }
 }
