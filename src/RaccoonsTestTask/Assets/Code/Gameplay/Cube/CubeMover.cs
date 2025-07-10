@@ -85,7 +85,7 @@ namespace Code.Gameplay.Cube
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out CubeRotationActivator _))
+            if (other.TryGetComponent(out CubeRotationActivator _)) 
                 _rigidbody.constraints = RigidbodyConstraints.None;
         }
     }

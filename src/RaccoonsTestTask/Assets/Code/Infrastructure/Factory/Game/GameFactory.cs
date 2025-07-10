@@ -82,9 +82,6 @@ namespace Code.Infrastructure.Factory.Game
             
             GameObject instance = _instantiator.InstantiatePrefab(prefab, at, Quaternion.identity, null);
             
-            CubeMover cubeMover = instance.GetComponent<CubeMover>();
-            cubeMover.Initialize();
-
             Cube cube = instance.GetComponent<Cube>();
             cube.Initialize(cubeValue);
 

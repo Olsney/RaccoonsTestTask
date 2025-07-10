@@ -35,7 +35,7 @@ namespace Code.Gameplay.Cube.Spawner
             _playerInputHandler.TapEnded += SpawnRandomAtStartPoint;
         }
 
-        public void SpawnMerge(int cubeValue, Vector3 at) => 
+        public GameObject SpawnMerge(int cubeValue, Vector3 at) => 
             _gameFactory.CreateCube(cubeValue, at);
 
         private void SpawnRandomAtStartPoint(Vector2 position) => 

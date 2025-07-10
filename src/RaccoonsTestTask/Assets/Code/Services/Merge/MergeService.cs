@@ -1,3 +1,4 @@
+using Code.Gameplay.Cube;
 using Code.Gameplay.Cube.Spawner;
 using Code.Infrastructure.Factory.Game;
 using Code.Services.CubeSpawnerProviders;
@@ -16,14 +17,26 @@ namespace Code.Services.Merge
             _spawnerProvider = spawnerProvider;
         }
 
-        public void Merge()
+        public void Merge(Cube first, Cube second)
         {
-            int po2Value = 2;
-            Vector3 spawnPosition = Vector3.zero;
-            
             CubeSpawner cubeSpawner = _spawnerProvider.Instance;
             
-            cubeSpawner.SpawnMerge(po2Value, spawnPosition);
+            if (first == null || second == null)
+                return;
+
+            first.IsMerging = true;
+            second.IsMerging = true;
+
+            int newCubeValue = first.Value + second.Value;
+            Vector3 spawnPosition = GetSpawnPosition(first, second);
+
+            cubeSpawner.SpawnMerge(newCubeValue, spawnPosition);
+            
+            Object.Destroy(first.gameObject);
+            Object.Destroy(second.gameObject);
         }
+
+        private static Vector3 GetSpawnPosition(Cube first, Cube second) => 
+            (first.transform.position + second.transform.position) / 2f;
     }
 }
