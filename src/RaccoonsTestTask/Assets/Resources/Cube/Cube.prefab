@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveLimitZ: 3
   _distanceFromCamera: 10
-  _launchForce: 500
+  _launchForce: 15
 --- !u!114 &5564934123839040981
 MonoBehaviour:
   m_ObjectHideFlags: 0

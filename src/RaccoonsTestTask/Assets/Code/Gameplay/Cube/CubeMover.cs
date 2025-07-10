@@ -1,3 +1,4 @@
+using System;
 using Code.Gameplay.Input;
 using Code.Services.InputHandlerProvider;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace Code.Gameplay.Cube
         {
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.isKinematic = true;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
             _mainCamera = Camera.main;
 
@@ -60,8 +62,12 @@ namespace Code.Gameplay.Cube
             _isDragging = false;
             _isLaunched = true;
             _rigidbody.isKinematic = false;
-            _rigidbody.AddForce(Vector3.left * _launchForce);
-        }
+            _rigidbody.linearVelocity = Vector3.zero;
+            _rigidbody.linearVelocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation |
+                                     RigidbodyConstraints.FreezePositionZ;
+            _rigidbody.AddForce(Vector3.left * _launchForce, ForceMode.Impulse);    }
 
         private void DragWithPointer(Vector2 screenPos)
         {
@@ -69,6 +75,14 @@ namespace Code.Gameplay.Cube
             var pos = transform.position;
             pos.z = Mathf.Clamp(world.z, -_moveLimitZ, _moveLimitZ);
             transform.position = pos;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out CubeRotationActivator rotationActivator) == false)
+                return;
+            
+            _rigidbody.constraints = RigidbodyConstraints.None;
         }
     }
 }
