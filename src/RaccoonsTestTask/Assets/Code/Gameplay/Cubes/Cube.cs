@@ -6,7 +6,7 @@ namespace Code.Gameplay.Cubes
 {
     public class Cube : MonoBehaviour
     {
-        [SerializeField] private float _minMergeImpulse = 0.3f;
+        [SerializeField] private float _minMergeImpulse = 0.1f;
 
         private IMergeService _mergeService;
         private Rigidbody _rigidbody;

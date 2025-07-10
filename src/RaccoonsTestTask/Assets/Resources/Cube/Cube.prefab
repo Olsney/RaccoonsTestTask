@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40280d5958f443d1b85b8a0b61ab7685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minMergeImpulse: 0.5
+  _minMergeImpulse: 0.1
 --- !u!114 &2637719234538008808
 MonoBehaviour:
   m_ObjectHideFlags: 0
