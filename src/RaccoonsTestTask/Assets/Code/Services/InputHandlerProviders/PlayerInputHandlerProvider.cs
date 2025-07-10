@@ -1,7 +1,4 @@
-using System;
 using Code.Gameplay.Input;
-using Code.Services.InputHandlerProvider;
-using UnityEngine;
 
 namespace Code.Services.InputHandlerProviders
 {

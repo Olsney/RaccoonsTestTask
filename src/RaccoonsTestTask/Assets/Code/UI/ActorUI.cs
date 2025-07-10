@@ -23,15 +23,11 @@ namespace Code.UI
         private void OnWorldDataChanged() => 
             _scoreView.SetValue(_worldData.Score);
 
-        private void Start()
-        {
+        private void Start() => 
             OnWorldDataChanged();
-        }
-        
 
-        private void OnDestroy()
-        {
+
+        private void OnDestroy() => 
             _worldData.Changed -= OnWorldDataChanged;
-        }
     }
 }

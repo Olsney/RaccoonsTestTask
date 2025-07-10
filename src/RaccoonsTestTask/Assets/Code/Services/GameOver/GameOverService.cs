@@ -1,8 +1,6 @@
 using Code.Gameplay.Cubes;
 using Code.UI;
-using Code.UI.Factory;
 using Code.UI.Services.Windows;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Code.Services.GameOver

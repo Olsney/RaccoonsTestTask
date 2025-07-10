@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Code.Gameplay.Input;
 using Code.Infrastructure.Factory.Game;
-using Code.Services.InputHandlerProvider;
-using Code.Services.Random;
+using Code.Services.InputHandlerProviders;
+using Code.Services.Randoms;
 using UnityEngine;
 using Zenject;
 
@@ -15,11 +15,6 @@ namespace Code.Gameplay.Cubes.Spawner
         private IGameFactory _gameFactory;
         private PlayerInputHandler _playerInputHandler;
         private IRandomService _randomService;
-
-
-        //Это итеративный враиант - дальше был бы настроенный ScriptableObject,
-        //я бы через StaticDataService доставал конфиг
-        //и дальше бы уже брал нужное сочетание значения и цвета.
 
         private static readonly Dictionary<int, Color> _colorByCubeValue = new()
         {

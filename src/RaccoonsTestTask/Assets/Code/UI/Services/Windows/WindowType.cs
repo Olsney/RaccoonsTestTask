@@ -1,4 +1,4 @@
-namespace Code.UI
+namespace Code.UI.Services.Windows
 {
     public enum WindowType
     {
