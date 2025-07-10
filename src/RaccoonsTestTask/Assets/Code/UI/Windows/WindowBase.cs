@@ -36,8 +36,6 @@ namespace Code.UI.Windows
         {
             if (_closeButton != null)
                 _closeButton.onClick.AddListener(() => Destroy(gameObject));
-
-            transform.localScale = Vector3.zero;
         }
         
         protected virtual void Initialize() { }
