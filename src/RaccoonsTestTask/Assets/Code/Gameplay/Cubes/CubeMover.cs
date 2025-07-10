@@ -3,7 +3,7 @@ using Code.Services.InputHandlerProvider;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Gameplay.Cube
+namespace Code.Gameplay.Cubes
 {
     public class CubeMover : MonoBehaviour
     {

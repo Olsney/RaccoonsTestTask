@@ -1,9 +1,8 @@
 using Code.Services.Merge;
-using Code.Services.Random;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Gameplay.Cube
+namespace Code.Gameplay.Cubes
 {
     public class Cube : MonoBehaviour
     {
@@ -13,6 +12,8 @@ namespace Code.Gameplay.Cube
         private Rigidbody _rigidbody;
 
         public bool IsMerging { get; private set; }
+        public bool IsInGame { get; private set; }
+        public bool ReachedGameOverPoint { get; private set; }
         
         public int Value { get; private set; }
 
@@ -57,8 +58,31 @@ namespace Code.Gameplay.Cube
             
             _mergeService.Merge(this, cube);
         }
-        
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out GameOverPoint losePoint) == false)
+                return;
+
+            if (IsInGame == false)
+            {
+                IsInGame = true;
+                
+                return;
+            }
+
+            if (IsInGame == true)
+            {
+                ReachedGameOverPoint = true;
+                losePoint.Finish(cube: this);
+            }
+
+        }
+
         public void MarkAsMerging() => 
             IsMerging = true;
+
+        public void MarkAsInGame() =>
+            IsInGame = true;
     }
 }

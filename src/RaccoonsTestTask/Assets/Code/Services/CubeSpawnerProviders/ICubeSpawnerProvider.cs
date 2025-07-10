@@ -1,4 +1,4 @@
-using Code.Gameplay.Cube.Spawner;
+using Code.Gameplay.Cubes.Spawner;
 
 namespace Code.Services.CubeSpawnerProviders
 {

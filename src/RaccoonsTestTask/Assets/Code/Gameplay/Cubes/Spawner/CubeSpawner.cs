@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Code.Gameplay.Input;
 using Code.Infrastructure.Factory.Game;
@@ -6,8 +5,9 @@ using Code.Services.InputHandlerProvider;
 using Code.Services.Random;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
-namespace Code.Gameplay.Cube.Spawner
+namespace Code.Gameplay.Cubes.Spawner
 {
     public class CubeSpawner : MonoBehaviour
     {
@@ -16,11 +16,11 @@ namespace Code.Gameplay.Cube.Spawner
         private PlayerInputHandler _playerInputHandler;
         private IRandomService _randomService;
 
-        
+
         //Это итеративный враиант - дальше был бы настроенный ScriptableObject,
         //я бы через StaticDataService доставал конфиг
         //и дальше бы уже брал нужное сочетание значения и цвета.
-        
+
         private static readonly Dictionary<int, Color> _colorByCubeValue = new()
         {
             { 2, new Color(0.9f, 0.9f, 1f) },
@@ -46,7 +46,7 @@ namespace Code.Gameplay.Cube.Spawner
         };
 
         [Inject]
-        public void Construct(IGameFactory gameFactory, 
+        public void Construct(IGameFactory gameFactory,
             IPlayerInputHandlerProvider playerInputHandlerProvider,
             IRandomService randomService)
         {
@@ -58,7 +58,7 @@ namespace Code.Gameplay.Cube.Spawner
         public void Initialize()
         {
             _playerInputHandler = _playerInputHandlerProvider.Get();
-            
+
             _playerInputHandler.TapEnded += SpawnRandomAtStartPoint;
         }
 
@@ -66,26 +66,42 @@ namespace Code.Gameplay.Cube.Spawner
         {
             GameObject mergedCube = _gameFactory.CreateCube(cubeValue, at);
             SetColor(mergedCube, cubeValue);
-            
+
+            Cube cube = mergedCube.GetComponent<Cube>();
+            cube.MarkAsInGame();
+
+            Rigidbody rigidbody = mergedCube.GetComponent<Rigidbody>();
+            AddRandomForceToNewCube(rigidbody);
+
             return mergedCube;
         }
 
         private void SpawnRandomAtStartPoint(Vector2 position)
         {
             int cubeValue = _randomService.GetRandomPo2Value();
-            
+
             GameObject cube = _gameFactory.CreateCube(cubeValue);
-            
+
             SetColor(cube, cubeValue);
         }
-        
+
         private void SetColor(GameObject cube, int value)
         {
             if (_colorByCubeValue.TryGetValue(value, out Color color))
             {
-                if (cube.TryGetComponent(out Renderer renderer)) 
+                if (cube.TryGetComponent(out Renderer renderer))
                     renderer.material.color = color;
             }
+        }
+
+        private static void AddRandomForceToNewCube(Rigidbody rb)
+        {
+            Vector3 randomDirection = Vector3.up + new Vector3(
+                Random.Range(-0.5f, 0.5f),
+                0f,
+                Random.Range(-0.5f, 0.5f)
+            ).normalized;
+            rb.AddForce(randomDirection * 0.5f, ForceMode.Impulse);
         }
     }
 }

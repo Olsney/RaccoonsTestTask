@@ -1,5 +1,5 @@
-using Code.Gameplay.Cube;
-using Code.Gameplay.Cube.Spawner;
+using Code.Gameplay.Cubes;
+using Code.Gameplay.Cubes.Spawner;
 using Code.Gameplay.Input;
 using Code.Infrastructure.AssetManagement;
 using Code.Services.CubeSpawnerProviders;
