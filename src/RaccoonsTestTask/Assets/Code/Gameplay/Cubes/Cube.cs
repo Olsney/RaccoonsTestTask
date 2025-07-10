@@ -9,7 +9,7 @@ namespace Code.Gameplay.Cubes
     {
         public event Action<int> ChangedValue;
             
-        [SerializeField] private float _minMergeImpulse = 0.5f;
+        [SerializeField] private float _minMergeImpulse = 0.3f;
 
         private IMergeService _mergeService;
         private Rigidbody _rigidbody;
