@@ -6,7 +6,7 @@ namespace Code.Services.GameOver
 {
     public class GameOverService : IGameOverService
     {
-        private const int MaxCubeValue = 1048576;
+        private const int MaxCubeValue = 131072;
 
         public void TryFinish(Cube cube)
         {

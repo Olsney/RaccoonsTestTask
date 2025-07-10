@@ -10,6 +10,7 @@ namespace Code.Gameplay.Cubes.Spawner
 {
     public class CubeSpawner : MonoBehaviour
     {
+        private const float ForceModifier = 0.5f;
         private IPlayerInputHandlerProvider _playerInputHandlerProvider;
         private IGameFactory _gameFactory;
         private PlayerInputHandler _playerInputHandler;
@@ -39,9 +40,6 @@ namespace Code.Gameplay.Cubes.Spawner
             { 32768, new Color(0.9f, 0.3f, 0.3f) },
             { 65536, new Color(0.4f, 0.2f, 0.8f) },
             { 131072, new Color(0.2f, 0.6f, 0.9f) },
-            { 262144, new Color(0.1f, 0.8f, 0.4f) },
-            { 524288, new Color(1f, 0.6f, 0.1f) },
-            { 1048576, new Color(0.7f, 0.1f, 0.1f) }
         };
 
         [Inject]
@@ -104,7 +102,7 @@ namespace Code.Gameplay.Cubes.Spawner
                 _randomService.Next(min, max)
             ).normalized;
             
-            rigidbody.AddForce(randomDirection * 0.5f, ForceMode.Impulse);
+            rigidbody.AddForce(randomDirection * ForceModifier, ForceMode.Impulse);
         }
     }
 }
