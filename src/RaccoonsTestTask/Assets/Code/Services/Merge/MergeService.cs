@@ -24,26 +24,28 @@ namespace Code.Services.Merge
 
         public void Merge(Cube first, Cube second)
         {
-            CubeSpawner cubeSpawner = _spawnerProvider.Instance;
-            
             if (first == null || second == null)
                 return;
-            
+
             first.MarkAsMerging();
             second.MarkAsMerging();
-            
-            _worldData.AddScore(first.Value + second.Value);
-            
-            int newCubeValue = first.Value + second.Value;
-            Vector3 spawnPosition = GetSpawnPosition(first, second);
 
-            cubeSpawner.SpawnMerge(newCubeValue, spawnPosition);
-            
+            int newCubeValue = first.Value + second.Value;
+            int scoreReward = CalculateScoreReward(newCubeValue);
+
+            _worldData.AddScore(scoreReward);
+
+            Vector3 spawnPosition = GetSpawnPosition(first, second);
+            _spawnerProvider.Instance.SpawnMerge(newCubeValue, spawnPosition);
+
             Object.Destroy(first.gameObject);
             Object.Destroy(second.gameObject);
         }
 
-        private static Vector3 GetSpawnPosition(Cube first, Cube second) => 
+        private static int CalculateScoreReward(int mergedValue) => 
+            mergedValue / 2;
+
+        private static Vector3 GetSpawnPosition(Cube first, Cube second) =>
             (first.transform.position + second.transform.position) / 2f;
     }
 }
