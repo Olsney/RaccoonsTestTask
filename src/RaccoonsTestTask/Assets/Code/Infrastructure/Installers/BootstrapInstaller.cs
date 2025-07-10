@@ -2,6 +2,7 @@ using Code.Infrastructure.AssetManagement;
 using Code.Infrastructure.Factory.Game;
 using Code.Infrastructure.Factory.State;
 using Code.Infrastructure.States;
+using Code.Services.CubeSpawnerProviders;
 using Code.Services.InputHandlerProvider;
 using Code.Services.InputHandlerProviders;
 using Code.Services.Inputs;
@@ -53,6 +54,7 @@ namespace Code.Infrastructure.Installers
             Container.Bind<ICubeSpawnPointProvider>().To<CubeSpawnPointProvider>().AsSingle();
             Container.Bind<IMergeService>().To<MergeService>().AsSingle();
             Container.Bind<IRandomService>().To<RandomService>().AsSingle();
+            Container.Bind<ICubeSpawnerProvider>().To<CubeSpawnerProvider>().AsSingle();
         }
         
         private void BindInputService()

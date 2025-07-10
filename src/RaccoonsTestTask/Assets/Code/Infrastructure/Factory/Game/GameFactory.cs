@@ -2,6 +2,7 @@ using Code.Gameplay.Cube;
 using Code.Gameplay.Cube.Spawner;
 using Code.Gameplay.Input;
 using Code.Infrastructure.AssetManagement;
+using Code.Services.CubeSpawnerProviders;
 using Code.Services.InputHandlerProvider;
 using Code.Services.Random;
 using Code.Services.SpawnPointProviders;
@@ -17,18 +18,21 @@ namespace Code.Infrastructure.Factory.Game
         private readonly IPlayerInputHandlerProvider _playerInputHandlerProvider;
         private readonly ICubeSpawnPointProvider _cubeSpawnPointProvider;
         private readonly IRandomService _randomService;
+        private readonly ICubeSpawnerProvider _cubeSpawnerProvider;
 
         public GameFactory(IInstantiator instantiator, 
             IAssetProvider assets,
             IPlayerInputHandlerProvider playerInputHandlerProvider,
             ICubeSpawnPointProvider cubeSpawnPointProvider,
-            IRandomService randomService)
+            IRandomService randomService,
+            ICubeSpawnerProvider cubeSpawnerProvider)
         {
             _instantiator = instantiator;
             _assets = assets;
             _playerInputHandlerProvider = playerInputHandlerProvider;
             _cubeSpawnPointProvider = cubeSpawnPointProvider;
             _randomService = randomService;
+            _cubeSpawnerProvider = cubeSpawnerProvider;
         }
         
         public GameObject CreatePlayerInputHandler()
@@ -51,10 +55,12 @@ namespace Code.Infrastructure.Factory.Game
             CubeSpawner cubeSpawner = instance.GetComponent<CubeSpawner>();
             cubeSpawner.Initialize();
 
+            _cubeSpawnerProvider.Instance = cubeSpawner;
+
             return instance;
         }
 
-        public GameObject CreateCube()
+        public GameObject CreateCube(int cubeValue)
         {
             GameObject prefab = _assets.Load(AssetPath.CubePath);
             CubeSpawnPoint spawnPoint = _cubeSpawnPointProvider.Instance;
@@ -65,7 +71,22 @@ namespace Code.Infrastructure.Factory.Game
             cubeMover.Initialize();
 
             Cube cube = instance.GetComponent<Cube>();
-            cube.Initialize(_randomService.GetRandomPo2Value());
+            cube.Initialize(cubeValue);
+
+            return instance;
+        }
+        
+        public GameObject CreateCube(int cubeValue, Vector3 at)
+        {
+            GameObject prefab = _assets.Load(AssetPath.CubePath);
+            
+            GameObject instance = _instantiator.InstantiatePrefab(prefab, at, Quaternion.identity, null);
+            
+            CubeMover cubeMover = instance.GetComponent<CubeMover>();
+            cubeMover.Initialize();
+
+            Cube cube = instance.GetComponent<Cube>();
+            cube.Initialize(cubeValue);
 
             return instance;
         }
