@@ -1,3 +1,4 @@
+using Code.Data;
 using Code.Gameplay.Cubes;
 using Code.Gameplay.Cubes.Spawner;
 using Code.Infrastructure.Factory.Game;
@@ -10,11 +11,15 @@ namespace Code.Services.Merge
     {
         private readonly IGameFactory _gameFactory;
         private readonly ICubeSpawnerProvider _spawnerProvider;
+        private readonly IWorldData _worldData;
 
-        public MergeService(IGameFactory gameFactory, ICubeSpawnerProvider spawnerProvider)
+        public MergeService(IGameFactory gameFactory, 
+            ICubeSpawnerProvider spawnerProvider,
+            IWorldData worldData)
         {
             _gameFactory = gameFactory;
             _spawnerProvider = spawnerProvider;
+            _worldData = worldData;
         }
 
         public void Merge(Cube first, Cube second)
@@ -26,6 +31,8 @@ namespace Code.Services.Merge
             
             first.MarkAsMerging();
             second.MarkAsMerging();
+            
+            _worldData.AddScore(first.Value + second.Value);
             
             int newCubeValue = first.Value + second.Value;
             Vector3 spawnPosition = GetSpawnPosition(first, second);

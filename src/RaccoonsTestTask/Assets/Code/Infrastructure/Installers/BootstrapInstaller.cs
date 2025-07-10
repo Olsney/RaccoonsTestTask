@@ -1,3 +1,4 @@
+using Code.Data;
 using Code.Infrastructure.AssetManagement;
 using Code.Infrastructure.Factory.Game;
 using Code.Infrastructure.Factory.State;
@@ -12,6 +13,7 @@ using Code.Services.Random;
 using Code.Services.Randoms;
 using Code.Services.SpawnPointProviders;
 using Code.Services.StaticData;
+using Code.UI.Factory;
 using UnityEngine;
 using Zenject;
 
@@ -35,6 +37,7 @@ namespace Code.Infrastructure.Installers
         {
             Container.Bind<IGameFactory>().To<GameFactory>().AsSingle();
             Container.Bind<IStateFactory>().To<StateFactory>().AsSingle();
+            Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
         }
 
         private void BindStates()
@@ -57,6 +60,7 @@ namespace Code.Infrastructure.Installers
             Container.Bind<IRandomService>().To<RandomService>().AsSingle();
             Container.Bind<ICubeSpawnerProvider>().To<CubeSpawnerProvider>().AsSingle();
             Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
+            Container.Bind<IWorldData>().To<WorldData>().AsSingle();
         }
         
         private void BindInputService()
