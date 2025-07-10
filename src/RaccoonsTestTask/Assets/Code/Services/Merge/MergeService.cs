@@ -23,10 +23,10 @@ namespace Code.Services.Merge
             
             if (first == null || second == null)
                 return;
-
-            first.IsMerging = true;
-            second.IsMerging = true;
-
+            
+            first.MarkAsMerging();
+            second.MarkAsMerging();
+            
             int newCubeValue = first.Value + second.Value;
             Vector3 spawnPosition = GetSpawnPosition(first, second);
 

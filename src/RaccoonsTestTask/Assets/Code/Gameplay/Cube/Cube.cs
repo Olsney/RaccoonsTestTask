@@ -12,9 +12,8 @@ namespace Code.Gameplay.Cube
         private IMergeService _mergeService;
         private Rigidbody _rigidbody;
 
-        public bool IsMerging { get; set; }
+        public bool IsMerging { get; private set; }
         
-
         public int Value { get; private set; }
 
         [Inject]
@@ -53,8 +52,13 @@ namespace Code.Gameplay.Cube
 
             if (velocityTowards < _minMergeImpulse)
                 return;
-
+            
+            IsMerging = true;
+            
             _mergeService.Merge(this, cube);
         }
+        
+        public void MarkAsMerging() => 
+            IsMerging = true;
     }
 }
