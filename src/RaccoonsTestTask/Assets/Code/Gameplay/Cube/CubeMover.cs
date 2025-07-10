@@ -8,7 +8,8 @@ namespace Code.Gameplay.Cube
 {
     public class CubeMover : MonoBehaviour
     {
-        [SerializeField] private float _moveLimitZ = 3f;
+        [SerializeField] private float _leftLimitZ = -0.6f;
+        [SerializeField] private float _rightLimitZ = 2.7f;
         [SerializeField] private float _distanceFromCamera = 10f;
         [SerializeField] private float _launchForce = 500f;
 
@@ -37,7 +38,7 @@ namespace Code.Gameplay.Cube
             _input.TapEnded += OnTapEnded;
         }
 
-        public void Dispose()
+        public void OnDestroy()
         {
             _input.TapStarted -= OnTapStarted;
             _input.TapEnded -= OnTapEnded;
@@ -51,38 +52,42 @@ namespace Code.Gameplay.Cube
 
         private void OnTapStarted(Vector2 pos)
         {
-            if (_isLaunched) return;
+            if (_isLaunched) 
+                return;
+            
             _isDragging = true;
         }
 
         private void OnTapEnded(Vector2 pos)
         {
-            if (_isLaunched) return;
+            if (_isLaunched) 
+                return;
 
             _isDragging = false;
             _isLaunched = true;
+
             _rigidbody.isKinematic = false;
             _rigidbody.linearVelocity = Vector3.zero;
-            _rigidbody.linearVelocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation |
-                                     RigidbodyConstraints.FreezePositionZ;
-            _rigidbody.AddForce(Vector3.left * _launchForce, ForceMode.Impulse);    }
 
-        private void DragWithPointer(Vector2 screenPos)
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+            _rigidbody.AddForce(Vector3.left * _launchForce, ForceMode.Impulse);
+        }
+
+        private void DragWithPointer(Vector2 screenPosition)
         {
-            Vector3 world = _mainCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, _distanceFromCamera));
-            var pos = transform.position;
-            pos.z = Mathf.Clamp(world.z, -_moveLimitZ, _moveLimitZ);
-            transform.position = pos;
+            Vector3 cameraPosition = _mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, _distanceFromCamera));
+            Vector3 cubePermissiblePosition = transform.position;
+            cubePermissiblePosition.z = Mathf.Clamp(cameraPosition.z, _leftLimitZ, _rightLimitZ);
+            
+            transform.position = cubePermissiblePosition;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out CubeRotationActivator rotationActivator) == false)
-                return;
-            
-            _rigidbody.constraints = RigidbodyConstraints.None;
+            if (other.TryGetComponent(out CubeRotationActivator _))
+                _rigidbody.constraints = RigidbodyConstraints.None;
         }
     }
 }

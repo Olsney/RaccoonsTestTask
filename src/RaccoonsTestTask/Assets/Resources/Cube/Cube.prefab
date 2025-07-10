@@ -163,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f56a9e8097a4cf9a5bd3a3d406f2892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveLimitZ: 3
+  _leftLimitZ: -0.6
+  _rightLimitZ: 2.7
   _distanceFromCamera: 10
   _launchForce: 15
 --- !u!114 &5564934123839040981
