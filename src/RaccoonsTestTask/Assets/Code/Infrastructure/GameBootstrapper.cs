@@ -1,4 +1,3 @@
-using Code.Infrastructure.Factory;
 using Code.Infrastructure.Factory.Game;
 using Code.Infrastructure.States;
 using UnityEngine;

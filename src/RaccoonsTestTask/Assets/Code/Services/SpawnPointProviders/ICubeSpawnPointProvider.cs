@@ -1,4 +1,4 @@
-using Code.Gameplay.Cube;
+using Code.Gameplay.Cubes;
 
 namespace Code.Services.SpawnPointProviders
 {

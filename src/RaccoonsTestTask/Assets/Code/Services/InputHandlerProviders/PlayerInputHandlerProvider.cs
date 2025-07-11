@@ -1,5 +1,4 @@
 using Code.Gameplay.Input;
-using Code.Services.InputHandlerProvider;
 
 namespace Code.Services.InputHandlerProviders
 {
