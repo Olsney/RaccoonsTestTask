@@ -1,4 +1,3 @@
-using System;
 using Code.Services.Merge;
 using UnityEngine;
 using Zenject;
@@ -7,13 +6,10 @@ namespace Code.Gameplay.Cubes
 {
     public class Cube : MonoBehaviour
     {
-        public event Action<int> ChangedValue;
-            
-        [SerializeField] private float _minMergeImpulse = 0.5f;
+        [SerializeField] private float _minMergeImpulse = 0.1f;
 
         private IMergeService _mergeService;
         private Rigidbody _rigidbody;
-
 
         public bool IsMerging { get; private set; }
         public bool IsInGame { get; private set; }
@@ -34,10 +30,6 @@ namespace Code.Gameplay.Cubes
             IsMerging = false;
 
             _rigidbody = GetComponent<Rigidbody>();
-
-            ChangedValue?.Invoke(Value);
-
-            Debug.Log(Value);
         }
         
         private void OnCollisionEnter(Collision collision)
@@ -80,6 +72,7 @@ namespace Code.Gameplay.Cubes
             if (IsInGame)
             {
                 ReachedGameOverPoint = true;
+                
                 losePoint.Finish(cube: this);
             }
 

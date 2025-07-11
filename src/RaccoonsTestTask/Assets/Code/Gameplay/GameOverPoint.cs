@@ -1,5 +1,4 @@
 using Code.Gameplay.Cubes;
-using Code.Infrastructure.Factory.Game;
 using Code.Services.GameOver;
 using UnityEngine;
 using Zenject;

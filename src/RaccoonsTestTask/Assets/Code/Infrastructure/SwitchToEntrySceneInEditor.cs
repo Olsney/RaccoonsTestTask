@@ -6,7 +6,6 @@ namespace Code.Infrastructure
 {
     public class SwitchToEntrySceneInEditor : MonoBehaviour
     {
-        // Has execution order to start before every other script
 #if UNITY_EDITOR
         private const string EntrySceneName = "Initial";
 

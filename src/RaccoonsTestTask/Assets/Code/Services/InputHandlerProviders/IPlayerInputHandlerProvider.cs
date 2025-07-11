@@ -1,6 +1,6 @@
 using Code.Gameplay.Input;
 
-namespace Code.Services.InputHandlerProvider
+namespace Code.Services.InputHandlerProviders
 {
     public interface IPlayerInputHandlerProvider
     {

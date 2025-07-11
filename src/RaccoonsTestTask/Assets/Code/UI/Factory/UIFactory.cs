@@ -22,23 +22,21 @@ namespace Code.UI.Factory
             GameObject prefab = _assets.Load(AssetPath.UIRoothPath);
             _uiRoot = _instantiator.InstantiatePrefab(prefab);
             
-            return null;
+            return _uiRoot;
         }
 
         public GameObject CreateHud()
         {
             GameObject prefab = _assets.Load(AssetPath.HudPath);
             
-            return _instantiator.InstantiatePrefab(prefab, Vector3.zero, 
-                Quaternion.identity, null);
+            return _instantiator.InstantiatePrefab(prefab);
         }
 
         public GameObject CreateVictoryWindow()
         {
             GameObject prefab = _assets.Load(AssetPath.VictoryWindowPath);
             
-            return _instantiator.InstantiatePrefab(prefab, Vector3.zero, 
-                Quaternion.identity, _uiRoot.transform);
+            return _instantiator.InstantiatePrefab(prefab,_uiRoot.transform);
             
         }
 
@@ -46,7 +44,7 @@ namespace Code.UI.Factory
         {
             GameObject prefab = _assets.Load(AssetPath.LoseWindowPath);
             
-            return _instantiator.InstantiatePrefab(prefab, Vector3.zero, 
-                Quaternion.identity, _uiRoot.transform);        }
+            return _instantiator.InstantiatePrefab(prefab, _uiRoot.transform);        
+        }
     }
 }

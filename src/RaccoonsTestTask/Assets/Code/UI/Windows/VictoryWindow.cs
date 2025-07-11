@@ -24,6 +24,6 @@ namespace Code.UI.Windows
         }
 
         private void RefreshScoreText() => 
-            _text.text = $"You won! Your score is + {WorldData.Score.ToString()}";
+            _text.text = $"You won! Your score is + \n{WorldData.Score.ToString()}";
     }
 }

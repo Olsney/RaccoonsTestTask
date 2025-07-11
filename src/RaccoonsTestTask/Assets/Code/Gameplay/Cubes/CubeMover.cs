@@ -1,5 +1,5 @@
 using Code.Gameplay.Input;
-using Code.Services.InputHandlerProvider;
+using Code.Services.InputHandlerProviders;
 using UnityEngine;
 using Zenject;
 
@@ -76,15 +76,22 @@ namespace Code.Gameplay.Cubes
 
         private void DragWithPointer(Vector2 screenPosition)
         {
-            Vector3 cameraPosition = _mainCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, _distanceFromCamera));
+            Vector3 cameraPosition = _mainCamera.ScreenToWorldPoint(new Vector3(
+                screenPosition.x, screenPosition.y, _distanceFromCamera));
             Vector3 cubePermissiblePosition = transform.position;
-            cubePermissiblePosition.z = Mathf.Clamp(cameraPosition.z, _leftLimitZ, _rightLimitZ);
+            cubePermissiblePosition.z = Mathf.Clamp(
+                cameraPosition.z, 
+                _leftLimitZ, 
+                _rightLimitZ);
             
             transform.position = cubePermissiblePosition;
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            if (_rigidbody == null)
+                return;
+            
             if (other.TryGetComponent(out CubeRotationActivator _)) 
                 _rigidbody.constraints = RigidbodyConstraints.None;
         }

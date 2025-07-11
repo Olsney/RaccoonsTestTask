@@ -29,8 +29,6 @@ namespace Code.Gameplay.Input
                 {
                     _isDragging = true;
 
-                    Debug.Log("TapStarted");
-
                     TapStarted?.Invoke(_inputService.GetPointerPosition());
                 }
             }
@@ -38,8 +36,6 @@ namespace Code.Gameplay.Input
             {
                 if (_isDragging && _inputService.IsPointerUp())
                 {
-                    Debug.Log("TapEnded");
-
                     TapEnded?.Invoke(_inputService.GetPointerPosition());
 
                     _isDragging = false;
