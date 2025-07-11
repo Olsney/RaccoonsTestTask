@@ -1,5 +1,6 @@
 using Code.Data;
 using Code.Gameplay.Cubes;
+using Code.Services.CubePools;
 using Code.Services.CubeSpawnerProviders;
 using UnityEngine;
 
@@ -9,12 +10,16 @@ namespace Code.Services.Merge
     {
         private readonly ICubeSpawnerProvider _spawnerProvider;
         private readonly IWorldData _worldData;
+        private readonly ICubePool _cubePool;
+
 
         public MergeService(ICubeSpawnerProvider spawnerProvider,
-            IWorldData worldData)
+            IWorldData worldData,
+            ICubePool cubePool)
         {
             _spawnerProvider = spawnerProvider;
             _worldData = worldData;
+            _cubePool = cubePool;
         }
 
         public void Merge(Cube first, Cube second)
@@ -33,8 +38,16 @@ namespace Code.Services.Merge
             Vector3 spawnPosition = GetSpawnPosition(first, second);
             _spawnerProvider.Instance.SpawnMerge(newCubeValue, spawnPosition);
 
-            Object.Destroy(first.gameObject);
-            Object.Destroy(second.gameObject);
+            ReleaseCube(first);
+            ReleaseCube(second);
+        }
+        
+        private void ReleaseCube(Cube cube)
+        {
+            if (cube.TryGetComponent(out CubeMover mover))
+                mover.Cleanup();
+
+            _cubePool.Release(cube.gameObject);
         }
 
         private static int CalculateScoreReward(int mergedValue) => 

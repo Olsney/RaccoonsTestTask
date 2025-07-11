@@ -10,8 +10,10 @@ namespace Code.UI.Elements
         [SerializeField] private Cube _cube;
         [SerializeField] private List<TextMeshPro> _texts = new();
         
-        private void Start()
+        private void Awake()
         {
+            _cube.ValueUpdated += UpdateValue;
+            
             UpdateValue();
         }
 

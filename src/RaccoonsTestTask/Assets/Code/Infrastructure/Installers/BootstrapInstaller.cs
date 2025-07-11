@@ -3,6 +3,7 @@ using Code.Infrastructure.AssetManagement;
 using Code.Infrastructure.Factory.Game;
 using Code.Infrastructure.Factory.State;
 using Code.Infrastructure.States;
+using Code.Services.CubePools;
 using Code.Services.CubeSpawnerProviders;
 using Code.Services.GameOver;
 using Code.Services.InputHandlerProviders;
@@ -61,6 +62,7 @@ namespace Code.Infrastructure.Installers
             Container.Bind<IGameOverService>().To<GameOverService>().AsSingle();
             Container.Bind<IWorldData>().To<WorldData>().AsSingle();
             Container.Bind<IWindowService>().To<WindowService>().AsSingle();
+            Container.Bind<ICubePool>().To<CubePool>().AsSingle();
         }
         
         private void BindInputService()

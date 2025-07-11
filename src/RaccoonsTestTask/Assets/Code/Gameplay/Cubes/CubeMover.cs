@@ -31,10 +31,19 @@ namespace Code.Gameplay.Cubes
             _rigidbody.isKinematic = true;
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
+            _isDragging = false;
+            _isLaunched = false;
+            
             _mainCamera = Camera.main;
 
             _input.TapStarted += OnTapStarted;
             _input.TapEnded += OnTapEnded;
+        }
+        
+        public void Cleanup()
+        {
+            _input.TapStarted -= OnTapStarted;
+            _input.TapEnded -= OnTapEnded;
         }
 
         public void OnDestroy()
