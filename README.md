@@ -12,7 +12,7 @@
 
 ---
 
-## 📱 Prototype: "2048 3D" — Android Game
+## 📱 Prototype: "2048 3D"
 
 This is a physics-based 3D gameplay prototype inspired by the classic puzzle game **2048**, developed as a test task for the Unity Developer position at **Raccoons Games**.
 
