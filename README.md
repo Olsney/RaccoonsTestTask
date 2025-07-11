@@ -68,11 +68,10 @@ This is a physics-based 3D gameplay prototype inspired by the classic puzzle gam
 - C# — Object-Oriented Programming
 - Unity Physics (3D)
 
-## 🦝 About the Developer
+---
 
-This project was created as a test assignment for **Raccoons Games**.  
-My focus was on **clean architecture**, **smooth and satisfying gameplay**, and **scalability** for future development.
+## 🧑‍💻 Author
 
-Thank you for reviewing my solution!
+**Maksym Kastorskyi**  
+[GitHub](https://github.com/Olsney) · [LinkedIn](https://linkedin.com/in/maksym-kastorskyi) · [Telegram](https://t.me/M_Kast)
 
-— *Maksym Kastorskyi*
