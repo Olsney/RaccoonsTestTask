@@ -2,6 +2,7 @@ using Code.Gameplay.Cubes;
 using Code.Gameplay.Cubes.Spawner;
 using Code.Gameplay.Input;
 using Code.Infrastructure.AssetManagement;
+using Code.Services.CubePools;
 using Code.Services.CubeSpawnerProviders;
 using Code.Services.InputHandlerProviders;
 using Code.Services.Randoms;
@@ -19,13 +20,15 @@ namespace Code.Infrastructure.Factory.Game
         private readonly ICubeSpawnPointProvider _cubeSpawnPointProvider;
         private readonly IRandomService _randomService;
         private readonly ICubeSpawnerProvider _cubeSpawnerProvider;
+        private readonly ICubePool _cubePool;
 
         public GameFactory(IInstantiator instantiator, 
             IAssetProvider assets,
             IPlayerInputHandlerProvider playerInputHandlerProvider,
             ICubeSpawnPointProvider cubeSpawnPointProvider,
             IRandomService randomService,
-            ICubeSpawnerProvider cubeSpawnerProvider)
+            ICubeSpawnerProvider cubeSpawnerProvider,
+            ICubePool cubePool)
         {
             _instantiator = instantiator;
             _assets = assets;
@@ -33,6 +36,7 @@ namespace Code.Infrastructure.Factory.Game
             _cubeSpawnPointProvider = cubeSpawnPointProvider;
             _randomService = randomService;
             _cubeSpawnerProvider = cubeSpawnerProvider;
+            _cubePool = cubePool;
         }
         
         public GameObject CreatePlayerInputHandler()
@@ -62,10 +66,9 @@ namespace Code.Infrastructure.Factory.Game
 
         public GameObject CreateCube(int cubeValue)
         {
-            GameObject prefab = _assets.Load(AssetPath.CubePath);
             CubeSpawnPoint spawnPoint = _cubeSpawnPointProvider.Instance;
             
-            GameObject instance = _instantiator.InstantiatePrefab(prefab, spawnPoint.transform.position, Quaternion.identity, null);
+            GameObject instance = _cubePool.Get(spawnPoint.transform.position, Quaternion.identity);
             
             CubeMover cubeMover = instance.GetComponent<CubeMover>();
             cubeMover.Initialize();
@@ -78,10 +81,8 @@ namespace Code.Infrastructure.Factory.Game
         
         public GameObject CreateCube(int cubeValue, Vector3 at)
         {
-            GameObject prefab = _assets.Load(AssetPath.CubePath);
-            
-            GameObject instance = _instantiator.InstantiatePrefab(prefab, at, Quaternion.identity, null);
-            
+            GameObject instance = _cubePool.Get(at, Quaternion.identity);
+
             Cube cube = instance.GetComponent<Cube>();
             cube.Initialize(cubeValue);
 
