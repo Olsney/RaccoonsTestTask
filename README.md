@@ -24,7 +24,7 @@ This is a physics-based 3D gameplay prototype inspired by the classic puzzle gam
 
 - ✅ **Dependency Injection** using **Zenject**
 - ✅ **State Machine** to manage game flow (Init, Playing, GameOver)
-- ✅ **Object pool** for cubes*
+- ✅ **Object pool** for cubes
 - ✅ **Service–Component architecture**
 - ✅ **Merge logic** with impulse detection and value validation
 - ✅ **DOTween animations** for smooth feedback and polish
